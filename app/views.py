@@ -1,17 +1,21 @@
 from app import app
 from flask import render_template, flash, redirect, make_response
-from .forms import LoginForm, Interactions, Companies, Contacts, Offers, SearchForm
+from .forms import LoginForm
 import json
 import flask
 import httplib2
 from apiclient import discovery
 import requests 
 from oauth2client import client
-from database import insert_student
 from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 
+basic_auth = BasicAuth(app)
+
+oauth = OAuth(app)
+app.debug = True
+app.secret_key = 'kj1VHtx6sPDLUL1L'
 
 @app.route('/')
 @app.route('/index')
@@ -27,6 +31,7 @@ def index():
 							title='Home',
 							user=user)
 
+
 # https://stackoverflow.com/questions/26357278/how-to-get-email-address-from-linkedin-using-flask-oauthlib
 @app.route('/authorized')
 def authorized():
@@ -36,6 +41,7 @@ def authorized():
     session['linkedin_token'] = (resp['access_token'], '')
     me = linkedin.get('people/~')  # <== HOW can I get this line to return the email address?
     return jsonify(me.data)
+
 
 @app.route('/oauth2callback')
 def oauth2callback():
