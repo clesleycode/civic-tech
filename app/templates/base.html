@@ -1,0 +1,35 @@
+<html> 
+	<head>
+
+		{%if title %}
+		<title>{{ title }} - Byte Career Services </title> 
+		{% else %}
+		<title> Welcome to Byte Career Services </title>
+		{% endif %}
+		 <link rel="stylesheet" href="./../static/style.css">
+		 <link rel="stylesheet" href="./../static/form.css">
+	</head>
+	<body>
+		<ul class="nav">
+  		<li class="navItem"><a href="/index">Home</a></li>
+  		<li class="navItem"><a href="/contact">Submit Contact</a></li>
+ 		<li class="navItem"><a href="/companies">Company</a></li>
+  		<li class="navItem"><a href="/interactions">Interaction</a></li>
+  		<li class="navItem"><a href="/offers">Offer</a></li>
+  		<li class="navItem"><a href="/search">Search</a></li>
+		</ul>
+    	
+	    <hr>
+		{% with messages = get_flashed_messages() %}
+			{% if messages %}
+				<ul>
+				{% for message in messages %}
+					<li>{{ message }} </li>
+				{% endfor %}
+				</ul>
+			{% endif %}
+		{% endwith %}
+		{% block content %}{% endblock %}
+
+	</body>
+</html>

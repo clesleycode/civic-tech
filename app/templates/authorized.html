@@ -1,0 +1,21 @@
+<!-- entend from base layout -->
+{% extends "base.html" %}
+
+
+{% block content %}
+<script src="https://cdn.auth0.com/w2/auth0-7.6.1.min.js"></script>
+<script>
+var auth = new auth0.WebAuth({domain: 'lesley2958.auth0.com', clientID: '-fEdcsXAjicq236LWj2-DmHjjDeUD-hq'});
+
+function signin() {
+     auth.authorize({
+         audience: '{YOUR_API_IDENTIFIER}',
+         scope: 'openid profile',
+         responseType: 'code',
+         redirectUri: 'https://YOUR_APP/callback'
+     });
+}
+</script>
+	<button onclick="signin()">Login</button>
+
+{% endblock %}
