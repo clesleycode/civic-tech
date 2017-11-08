@@ -61,9 +61,9 @@ def oauth2callback():
 		flask.session['credentials'] = credentials.to_json()
 		stud = get_user_info(credentials)
 		print(stud)
-		if (insert_student.check_student(stud['id']) == None): 
-			insert_student.new_student(stud['id'], stud['name'])
-		return flask.redirect(flask.url_for('index'))
+#		if (insert_student.check_student(stud['id']) == None): 
+#			insert_student.new_student(stud['id'], stud['name'])
+#		return flask.redirect(flask.url_for('index'))
 
 
 @app.route('/login', methods=['GET', 'POST']) # create mappings
@@ -78,3 +78,19 @@ def login():
 	return(render_template('login.html',
 							title='Sign in!', 
 							form=form))
+
+def get_user_info(credentials):
+	# sends request to the UserInfo API to retrieve the user's information
+	user_info_service = discovery.build(
+		serviceName='oauth2', version='v2',
+		http=credentials.authorize(httplib2.Http()))
+	user_info = None
+	try:
+		user_info = user_info_service.userinfo().get().execute()
+	except errors.HttpError as e:
+		logging.error('An error occurred: %s', e)
+	if user_info and user_info.get('id'):
+		return user_info
+	else:
+		raise NoUserIdException()
+
