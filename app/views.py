@@ -63,7 +63,7 @@ def oauth2callback():
 		print(stud)
 #		if (insert_student.check_student(stud['id']) == None): 
 #			insert_student.new_student(stud['id'], stud['name'])
-#		return flask.redirect(flask.url_for('index'))
+		return flask.redirect(flask.url_for('index'))
 
 
 @app.route('/login', methods=['GET', 'POST']) # create mappings
