@@ -1,0 +1,34 @@
+<!-- entend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript">
+function set_openid(openid, pr) {
+	u = openid.search('<username>')
+	if (u != -1) {
+		user = prompt('Enter your ' + pr + ' username:')
+		openid = openid.substr(0, u) + user
+	}
+	form = document.forms['login'];
+	form.elements['openid'].value = openid
+}
+</script>
+    <div class="container">
+  <div class="info">
+    <h1>Submit Contact</h1>
+  </div>
+</div>
+<div class="form">
+  <form action="" method="post" name="contact">
+      {{form.name(placeholder="Person's Name")}}
+      {{form.position(placeholder="Person's Position")}}
+      {{form.number(placeholder="Phone Number")}}
+      {{form.notes(placeholder="Notes:")}}
+      {{form.email(placeholder="Email")}}
+      <p> Company: </p> <br>
+      {{form.company(placeholder="Company")}} <br> <br>
+      <button type="submit"> Submit </button>
+  </form>
+</div>
+
+{% endblock %}

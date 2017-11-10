@@ -10,3 +10,12 @@ class LoginForm(Form):
 class Companies(Form): 
 	name = TextField('name')
 	address = StringField('Address', validators=None)
+
+
+class Contacts(Form):
+	name = StringField('name', validators=None)
+	company = SelectField('type', choices=insert_student.get_companies())
+	number = TextField('Phone Number', [validators.length(max=11)])
+	email = TextField('email', validators=[validators.Email()])
+	position = StringField('Position', validators=None)
+	notes = StringField('Notes', validators=None)

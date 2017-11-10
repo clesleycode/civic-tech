@@ -105,3 +105,15 @@ def company():
 							title='Submit a company!', 
 							form=form))
 
+
+@app.route('/contact', methods=['GET', 'POST']) # create mappings
+def contact():
+	form = Contacts()
+	if form.validate_on_submit():
+		flash('Sucess!')
+		return(redirect('/contact'))
+	insert_student.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
+	return(render_template('contact.html',
+							title='Submit a contact!', 
+							form=form))						
+
