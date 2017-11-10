@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, flash, redirect, make_response
+from flask import render_template, flash, redirect, make_response, request
 from .forms import LoginForm
 import json
 import flask
@@ -12,6 +12,7 @@ from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 import db_functions
 from .forms import Companies, Contacts
+import requests 
 
 basic_auth = BasicAuth(app)
 
@@ -20,7 +21,6 @@ app.debug = True
 app.secret_key = 'kj1VHtx6sPDLUL1L'
 
 @app.route('/')
-@app.route('/index')
 def index():
 	user = {'nickname': 'Lesley'}  # fake user
 	if 'credentials' not in flask.session:
@@ -29,9 +29,13 @@ def index():
 	if credentials.access_token_expired:
 		return flask.redirect(flask.url_for('oauth2callback'))
 	else:
-		return render_template('index.html',
-							title='Home',
-							user=user)
+		#should add a check
+		#if query db for user info based on email, return home, else return make a profile page
+		if True:
+			form = Contacts()
+			return render_template('join.html', title='Join', form=form)
+		else:
+			return render_template('index.html', title='Home', user=user)
 
 
 # https://stackoverflow.com/questions/26357278/how-to-get-email-address-from-linkedin-using-flask-oauthlib
@@ -96,6 +100,16 @@ def get_user_info(credentials):
 	else:
 		raise NoUserIdException()
 
+
+@app.route('/events', methods=['GET', 'POST']) # create mappings
+def events():
+	if request.method == 'POST':
+		print("that's cool")
+		return render_template('events.html')
+	else:
+		return render_template('events.html')
+
+
 @app.route('/companies', methods=['GET', 'POST']) # create mappings
 def company():
 	form = Companies()
@@ -107,15 +121,26 @@ def company():
 							title='Submit a company!', 
 							form=form))
 
+@app.route('/projects', methods=['GET', 'POST']) # create mappings
+def projects():
+	return render_template('events.html')
 
-@app.route('/contact', methods=['GET', 'POST']) # create mappings
+@app.route('/workshops', methods=['GET', 'POST']) # create mappings
+def workshops():
+	return render_template('events.html')
+
+@app.route('/techtalks', methods=['GET', 'POST']) # create mappings
+def techtalks():
+	return render_template('events.html')
+
+@app.route('/join', methods=['GET', 'POST']) # create mappings
 def contact():
 	form = Contacts()
 	if form.validate_on_submit():
 		flash('Sucess!')
 		return(redirect('/contact'))
 	db_functions.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
-	return(render_template('contact.html',
+	return(render_template('join.html',
 							title='Submit a contact!', 
 							form=form))						
 
