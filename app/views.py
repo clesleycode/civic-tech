@@ -13,6 +13,7 @@ from flask_oauthlib.client import OAuth
 import db_functions
 from .forms import AddCompanies, Contacts, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents
 import requests 
+import psycopg2
 
 basic_auth = BasicAuth(app)
 
@@ -20,7 +21,7 @@ oauth = OAuth(app)
 app.debug = True
 app.secret_key = 'kj1VHtx6sPDLUL1L'
 
-@app.route('/')
+@app.route('/', methods=['GET', 'POST'])
 def index():
 	user = {'nickname': 'Lesley'}  # fake user
 	if 'credentials' not in flask.session:
@@ -103,6 +104,12 @@ def get_user_info(credentials):
 
 @app.route('/events', methods=['GET', 'POST']) # create mappings
 def events():
+	try: 
+		conn = psycopg2.connect("dbname='proj1part2' user='wke2102' host='35.196.90.148' password='adi-tools'")
+		curr = conn.cursor()
+		print("connected!!")
+	except:
+		print("this failed to connect")
 	form = AddEvents()
 	if request.method == 'POST':
 		print("that's cool")
@@ -125,14 +132,14 @@ def company():
 @app.route('/projects', methods=['GET', 'POST']) 
 def projects():
 	form = AddProjects()
-	return render_template('events.html',  form=form)
+	return render_template('projects.html',  form=form)
 
 @app.route('/workshops', methods=['GET', 'POST']) 
 def workshops():
 	if request.method == 'POST':
-		return render_template('events.html')
+		return render_template('workshop.html')
 	form = AddWorkshop()
-	return render_template('events.html',  form=form)
+	return render_template('workshop.html',  form=form)
 
 @app.route('/techtalks', methods=['GET', 'POST']) 
 def techtalks():
@@ -142,21 +149,29 @@ def techtalks():
 		form  = AddTechTalks()
 		return render_template('techtalks.html', form=form)
 
-@app.route('/addcompany', methods=['GET', 'POST'])
-def addcompany():
+@app.route('/addcompany', methods=['GET', 'POST']) 
+def addCompany():
 	if request.method == 'POST':
-		return render_template('addCompany.html')
+		form = AddCompany(request.form)
+		if form.validate_on_submit():
+			print("here")
+			return render_template('companies.html')
+
+		return render_template('addCompany.html', form=form)
 	else:
 		form = AddCompany()
 		return render_template('addCompany.html', form=form)
 
-@app.route('/addevents', methods=['GET', 'POST']) 
+@app.route('/addevent', methods=['GET', 'POST']) 
 def addevents():
 	if request.method == 'POST':
+		print("in add events post method")
 		form = AddEvents(request.form)
 		if form.validate_on_submit():
 			print("here")
-		return render_template('events.html')
+			return render_template('events.html')
+		print("if statement failed")
+		return render_template('addEvents.html', form=form)
 	else:
 		form = AddEvents()
 		return render_template('addEvents.html', form=form)
@@ -164,7 +179,14 @@ def addevents():
 @app.route('/addworkshop', methods=['GET', 'POST']) 
 def addworkshop():
 	if request.method == 'POST':
-		return render_template('workshop.html')
+		form = AddEvents(request.form)
+		if form.validate_on_submit():
+			print("here in the if")
+			return render_template('workshop.html')
+		else:
+			print("in else")
+			flash("Please fill out all fields")
+			return render_template('addWorkshop.html', form=form)
 	else:
 		form = AddWorkshop()
 		return render_template('addWorkshop.html', form=form)
@@ -172,7 +194,11 @@ def addworkshop():
 @app.route('/addtechtalk', methods=['GET', 'POST']) 
 def addtechtalk():
 	if request.method == 'POST':
-		return render_template('techtalks.html')
+		form = AddTechTalks()
+		if form.validate_on_submit():
+			return render_template('techtalks.html')
+		else:
+			return render_template('addTechTalks.html', form=form)
 	else:
 		form = AddTechTalks()
 		return render_template('addTechTalks.html', form=form)
@@ -180,10 +206,13 @@ def addtechtalk():
 @app.route('/join', methods=['GET', 'POST']) # create mappings
 def contact():
 	if request.method == 'POST':
+		form = Contacts(request.form)
 		if form.validate_on_submit():
-			flash('Sucess!')
 			db_functions.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
 			return render_template('events.html')
+		else:
+			form = Contacts()	
+			return render_template('join.html', title='Submit a contact!', form=form)	
 	else:
 		form = Contacts()	
 		return render_template('join.html', title='Submit a contact!', form=form)				

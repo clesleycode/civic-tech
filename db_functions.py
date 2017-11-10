@@ -4,6 +4,7 @@ import pandas as pd
 db = sqlite3.connect("./database.db", check_same_thread=False)
 cursor = db.cursor()
 
+
 def insert_company(name, address):	
 	cursor.execute(''' INSERT INTO companies (name, address, hires) VALUES (?, ?, ?) ''', (str(name), str(address), 0,))
 	db.commit()
