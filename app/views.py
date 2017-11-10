@@ -94,3 +94,14 @@ def get_user_info(credentials):
 	else:
 		raise NoUserIdException()
 
+@app.route('/companies', methods=['GET', 'POST']) # create mappings
+def company():
+	form = Companies()
+	if form.validate_on_submit():
+		flash('Success!')
+		return(redirect('/companies'))
+	insert_student.insert_company(form.name.data, form.address.data)
+	return(render_template('companies.html',
+							title='Submit a company!', 
+							form=form))
+

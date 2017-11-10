@@ -6,3 +6,7 @@ from wtforms import validators
 class LoginForm(Form):
 	remember_me = BooleanField('remember_me', default=False)
 
+
+class Companies(Form): 
+	name = TextField('name')
+	address = StringField('Address', validators=None)
