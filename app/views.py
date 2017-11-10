@@ -11,7 +11,7 @@ from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 import db_functions
-from .forms import Companies, Contacts
+from .forms import AddCompanies, Contacts, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents
 import requests 
 
 basic_auth = BasicAuth(app)
@@ -103,16 +103,17 @@ def get_user_info(credentials):
 
 @app.route('/events', methods=['GET', 'POST']) # create mappings
 def events():
+	form = AddEvents()
 	if request.method == 'POST':
 		print("that's cool")
-		return render_template('events.html')
+		return render_template('events.html',  form=form)
 	else:
-		return render_template('events.html')
+		return render_template('events.html',  form=form)
 
 
 @app.route('/companies', methods=['GET', 'POST']) # create mappings
 def company():
-	form = Companies()
+	form = AddCompanies()
 	if form.validate_on_submit():
 		flash('Success!')
 		return(redirect('/companies'))
@@ -121,26 +122,69 @@ def company():
 							title='Submit a company!', 
 							form=form))
 
-@app.route('/projects', methods=['GET', 'POST']) # create mappings
+@app.route('/projects', methods=['GET', 'POST']) 
 def projects():
-	return render_template('events.html')
+	form = AddProjects()
+	return render_template('events.html',  form=form)
 
-@app.route('/workshops', methods=['GET', 'POST']) # create mappings
+@app.route('/workshops', methods=['GET', 'POST']) 
 def workshops():
-	return render_template('events.html')
+	if request.method == 'POST':
+		return render_template('events.html')
+	form = AddWorkshop()
+	return render_template('events.html',  form=form)
 
-@app.route('/techtalks', methods=['GET', 'POST']) # create mappings
+@app.route('/techtalks', methods=['GET', 'POST']) 
 def techtalks():
-	return render_template('events.html')
+	if request.method == 'POST':
+		return render_template('techtalks.html')
+	else:
+		form  = AddTechTalks()
+		return render_template('techtalks.html', form=form)
+
+@app.route('/addcompany', methods=['GET', 'POST'])
+def addcompany():
+	if request.method == 'POST':
+		return render_template('addCompany.html')
+	else:
+		form = AddCompany()
+		return render_template('addCompany.html', form=form)
+
+@app.route('/addevents', methods=['GET', 'POST']) 
+def addevents():
+	if request.method == 'POST':
+		form = AddEvents(request.form)
+		if form.validate_on_submit():
+			print("here")
+		return render_template('events.html')
+	else:
+		form = AddEvents()
+		return render_template('addEvents.html', form=form)
+
+@app.route('/addworkshop', methods=['GET', 'POST']) 
+def addworkshop():
+	if request.method == 'POST':
+		return render_template('workshop.html')
+	else:
+		form = AddWorkshop()
+		return render_template('addWorkshop.html', form=form)
+
+@app.route('/addtechtalk', methods=['GET', 'POST']) 
+def addtechtalk():
+	if request.method == 'POST':
+		return render_template('techtalks.html')
+	else:
+		form = AddTechTalks()
+		return render_template('addTechTalks.html', form=form)
 
 @app.route('/join', methods=['GET', 'POST']) # create mappings
 def contact():
-	form = Contacts()
-	if form.validate_on_submit():
-		flash('Sucess!')
-		return(redirect('/contact'))
-	db_functions.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
-	return(render_template('join.html',
-							title='Submit a contact!', 
-							form=form))						
+	if request.method == 'POST':
+		if form.validate_on_submit():
+			flash('Sucess!')
+			db_functions.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
+			return render_template('events.html')
+	else:
+		form = Contacts()	
+		return render_template('join.html', title='Submit a contact!', form=form)				
 
