@@ -1,0 +1,49 @@
+<!-- entend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<script type="text/javascript">
+function set_openid(openid, pr) {
+	u = openid.search('<username>')
+	if (u != -1) {
+		user = prompt('Enter your ' + pr + ' username:')
+		openid = openid.substr(0, u) + user
+	}
+	form = document.forms['login'];
+	form.elements['openid'].value = openid
+}
+</script>
+    <div class="container">
+  <div class="info">
+    <h1>Interaction</h1>
+  </div>
+</div>
+<div class="form">
+  <form action="" method="post" name="interaction"> 
+    <p> Type of Interaction:</p>
+    {{form.int_type}} <br>
+    <br>
+    <p> Who are you?</p>
+    {{form.stud_id}} <br>
+    <br>
+    <p> With whom did you meet?</p>
+    {{form.contact_id}} <br>
+    <br>
+    <p> Which company?</p>
+    {{form.company_id}} <br>
+    <br>
+    <p> Who you gave this info?</p>
+    {{form.connector}} <br>
+    <br>
+    <p> When did this happen? </p>
+    {{form.week_of}} <br>
+    <br>
+    <p> Type of Interview?</p>
+    {{form.interview_type}} <br>
+    <br>
+      <button type="submit"> Submit </button>
+
+  </form>
+</div>
+
+{% endblock %}
