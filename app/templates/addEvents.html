@@ -4,12 +4,15 @@
 {% block content %}
     <div class="container">
   <div class="info">
-    <h1>Add a new company</h1>
+    <h1>Add a new Event</h1>
   </div>
 </div>
 <div class="form">
   <form action="" method="post" name="companies">
-      {{form.name(placeholder="What is the company's name?")}}
+      {{form.name(placeholder="Event Name")}}
+      {{form.location(placeholder="Event Location")}}
+      {{form.eventTime(placeholder="Event Time")}}
+      {{form.numberAttendees(placeholder="Number of Attendees")}}
       <button type="submit"> Submit </button>
   </form>
 </div>
