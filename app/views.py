@@ -10,6 +10,8 @@ from oauth2client import client
 from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
+import db_functions
+from .forms import Companies, Contacts
 
 basic_auth = BasicAuth(app)
 
@@ -100,7 +102,7 @@ def company():
 	if form.validate_on_submit():
 		flash('Success!')
 		return(redirect('/companies'))
-	insert_student.insert_company(form.name.data, form.address.data)
+	db_functions.insert_company(form.name.data, form.address.data)
 	return(render_template('companies.html',
 							title='Submit a company!', 
 							form=form))
@@ -112,7 +114,7 @@ def contact():
 	if form.validate_on_submit():
 		flash('Sucess!')
 		return(redirect('/contact'))
-	insert_student.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
+	db_functions.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
 	return(render_template('contact.html',
 							title='Submit a contact!', 
 							form=form))						
