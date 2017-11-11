@@ -4,12 +4,12 @@
 {% block content %}
     <div class="container">
   <div class="info">
-    <h1>Add a new company</h1>
+    <h1>Add a new Tech Talk</h1>
   </div>
 </div>
 <div class="form">
-  <form action="/addcompany" method="post" name="companies">
-      {{form.name(placeholder="Company Name")}}
+  <form action="/addtechtalk" method="post" name="companies">
+      {{form.name(placeholder="Tech Talk name")}}
       <button type="submit"> Submit </button>
   </form>
 </div>

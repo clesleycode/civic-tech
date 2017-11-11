@@ -17,6 +17,7 @@ DATABASEURI = "postgresql://wke2102:8061@35.196.90.148/proj1part2"
 engine = create_engine(DATABASEURI)
 cursor = engine.connect()
 
+
 def insert_company(name, address):	
 	cursor.execute(''' INSERT INTO companies (name, address, hires) VALUES (?, ?, ?) ''', (str(name), str(address), 0,))
 	db.commit()

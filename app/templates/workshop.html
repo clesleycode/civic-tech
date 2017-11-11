@@ -1,0 +1,18 @@
+<!-- entend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<div class="container">
+
+<div class="info">
+    <h1>Workshops</h1>
+  </div>
+  <form action="/addworkshop">
+    <input type="submit" value="Add Workshop" />
+</form>
+  <p> A list of workshops will appear here and be clickable </p>
+</div>
+
+
+{% endblock %}
