@@ -9,6 +9,7 @@
 </div>
 <div class="form">
   <form action="" method="post" name="Workshop">
+  	   {{ form.csrf_token }}
       {{form.name(placeholder="Workshop Name")}}
       <button type="submit"> Submit </button>
   </form>

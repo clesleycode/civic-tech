@@ -9,6 +9,7 @@
 </div>
 <div class="form">
   <form action="/addtechtalk" method="post" name="companies">
+  	  {{ form.csrf_token }}
       {{form.name(placeholder="Tech Talk name")}}
       <button type="submit"> Submit </button>
   </form>

@@ -12,17 +12,14 @@ class LoginForm(Form):
 
 
 class AddCompanies(Form): 
-	name = StringField('name')
-	address = StringField('Address', validators=None)
-
-
-class Contacts(Form):
 	name = StringField('name', validators=None)
+
+
+class Person(Form):
+	name = StringField('name')
+	semester_start = StringField('semester-start')
+	project = SelectField('type', choices=db_functions.get_projects())
 	company = SelectField('type', choices=db_functions.get_companies())
-	number = StringField('Phone Number',  [InputRequired("Please enter your number.")])
-	email = StringField('email', validators= [InputRequired("Please enter your email address."), Email("This field requires a valid email address")])
-	position = StringField('Position', validators=None)
-	notes = StringField('Notes', validators=None)
 
 class AddCompany(Form):
 	name = StringField('name')

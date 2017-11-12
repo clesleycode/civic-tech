@@ -11,14 +11,13 @@
 </div>
 <div class="form">
   <form action="" method="post" name="contact">
+       {{ form.csrf_token }}
       {{form.name(placeholder="Full Name (ex. Mark Histon)")}}
-      {{form.position(placeholder="Semester Start (ex. Spring 2016)")}}
-      {{form.number(placeholder="Email (ex. markh@fb.com)")}}
-      <!-- {{form.email(placeholder="Email")}} -->
-      <p> Project: </p> <br>
-      {{form.company(placeholder="Project")}} <br> <br>
-      <p> Company: </p> <br>
-      {{form.company(placeholder="Company")}} <br> <br>
+      {{form.semester_start(placeholder="Semester Start (ex. Spring 2016)")}}
+      <p> Select what company you work for </p>
+      {{form.company}}
+      <p> Select a project to join </p>
+      {{form.project}}
       <button type="submit"> Submit </button>
   </form>
 </div>

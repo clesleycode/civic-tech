@@ -1,5 +1,5 @@
 from app import app
-from flask import render_template, flash, redirect, make_response, request
+from flask import render_template, flash, redirect, g, make_response, request, url_for
 from .forms import LoginForm
 import json
 import flask
@@ -11,7 +11,7 @@ from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 import db_functions
-from .forms import AddCompanies, Contacts, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents
+from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents
 import requests 
 import psycopg2
 
@@ -23,7 +23,6 @@ app.secret_key = 'kj1VHtx6sPDLUL1L'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	user = {'nickname': 'Lesley'}  # fake user
 	if 'credentials' not in flask.session:
 		return flask.redirect(flask.url_for('oauth2callback'))
 	credentials = client.OAuth2Credentials.from_json(flask.session['credentials'])
@@ -33,21 +32,9 @@ def index():
 		#should add a check
 		#if query db for user info based on email, return home, else return make a profile page
 		if True:
-			form = Contacts()
-			return render_template('join.html', title='Join', form=form)
+			return redirect(url_for('contact'))
 		else:
-			return render_template('index.html', title='Home', user=user)
-
-
-# https://stackoverflow.com/questions/26357278/how-to-get-email-address-from-linkedin-using-flask-oauthlib
-@app.route('/authorized')
-def authorized():
-    resp = linkedin.authorized_response()
-    if resp is None:
-        return 'Access denied:'
-    session['linkedin_token'] = (resp['access_token'], '')
-    me = linkedin.get('people/~')  # <== HOW can I get this line to return the email address?
-    return jsonify(me.data)
+			return redirect(url_for('contact'))
 
 
 @app.route('/oauth2callback')
@@ -67,11 +54,7 @@ def oauth2callback():
 		credentials = flow.step2_exchange(auth_code)
 		flask.session['credentials'] = credentials.to_json()
 		stud = get_user_info(credentials)
-		print(stud)
-#		if (insert_student.check_student(stud['id']) == None): 
-#			insert_student.new_student(stud['id'], stud['name'])
 		return flask.redirect(flask.url_for('index'))
-
 
 @app.route('/login', methods=['GET', 'POST']) # create mappings
 def login():
@@ -124,7 +107,7 @@ def company():
 	if form.validate_on_submit():
 		flash('Success!')
 		return(redirect('/companies'))
-	db_functions.insert_company(form.name.data, form.address.data)
+	#db_functions.insert_company(form.name.data, form.address.data)
 	return(render_template('companies.html',
 							title='Submit a company!', 
 							form=form))
@@ -152,9 +135,10 @@ def techtalks():
 @app.route('/addcompany', methods=['GET', 'POST']) 
 def addCompany():
 	if request.method == 'POST':
+		print("should be validating an addcompany request here")
 		form = AddCompany(request.form)
 		if form.validate_on_submit():
-			print("here")
+			db_functions.insert_company(form.name.data)
 			return render_template('companies.html')
 
 		return render_template('addCompany.html', form=form)
@@ -181,7 +165,6 @@ def addworkshop():
 	if request.method == 'POST':
 		form = AddEvents(request.form)
 		if form.validate_on_submit():
-			print("here in the if")
 			return render_template('workshop.html')
 		else:
 			print("in else")
@@ -203,18 +186,21 @@ def addtechtalk():
 		form = AddTechTalks()
 		return render_template('addTechTalks.html', form=form)
 
-@app.route('/join', methods=['GET', 'POST']) # create mappings
+@app.route('/profile', methods=['GET', 'POST']) # create mappings
 def contact():
 	if request.method == 'POST':
-		form = Contacts(request.form)
+		form = Person(request.form)
+		print(form.errors)
+		print("hello db")
 		if form.validate_on_submit():
-			db_functions.insert_contact(form.name.data, form.number.data, form.email.data, form.company.data, form.position.data, form.notes.data)
+			print("checking validate here")
+			db_functions.insert_contact(form.name.data, form.semester_start.data, form.project.data, form.company.data)
 			return render_template('events.html')
 		else:
-			form = Contacts()	
+			form = Person()	
 			return render_template('join.html', title='Submit a contact!', form=form)	
 	else:
-		form = Contacts()	
+		form = Person()	
 		return render_template('join.html', title='Submit a contact!', form=form)				
 
 

@@ -9,6 +9,7 @@
 </div>
 <div class="form">
   <form action="/addevent" method="post" name="event">
+      {{ form.csrf_token }}
       {{form.name(placeholder="Event Name")}}
       {{form.location(placeholder="Event Location")}}
       {{form.eventTime(placeholder="Event Time")}}
