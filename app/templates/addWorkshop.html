@@ -8,9 +8,11 @@
   </div>
 </div>
 <div class="form">
-  <form action="" method="post" name="Workshop">
-  	   {{ form.csrf_token }}
+  <form action="/addworkshop" method="post" name="Workshop">
+      {{form.csrf_token}}
       {{form.name(placeholder="Workshop Name")}}
+      <p> Which person is in charge of the event? </p>
+      {{form.hosts()}}
       <button type="submit"> Submit </button>
   </form>
 </div>

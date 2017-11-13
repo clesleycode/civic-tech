@@ -5,14 +5,14 @@
 
     <div class="container">
   <div class="info">
-    <h1>Your account</h1>
-    <h4> Be sure to keep your profile up to date. </h4>
+    <h1>Add an account</h1>
+    <h4> Add a new person to the ADI system. </h4>
   </div>
 </div>
 <div class="form">
-  <form action="" method="post" name="contact">
+  <form action="/profile" method="post" name="contact">
        {{ form.csrf_token }}
-      {{form.name(placeholder="Full Name (ex. Mark Histon)")}}
+      {{form.name(placeholder="Full Name (ex. Mark Du)")}}
       {{form.semester_start(placeholder="Semester Start (ex. Spring 2016)")}}
       <p> Select what company you work for </p>
       {{form.company}}

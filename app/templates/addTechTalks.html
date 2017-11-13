@@ -10,7 +10,8 @@
 <div class="form">
   <form action="/addtechtalk" method="post" name="companies">
   	  {{ form.csrf_token }}
-      {{form.name(placeholder="Tech Talk name")}}
+      {{form.name(placeholder="Tech Talk Name")}}
+       {{form.company()}}
       <button type="submit"> Submit </button>
   </form>
 </div>

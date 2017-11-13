@@ -12,7 +12,7 @@ class LoginForm(Form):
 
 
 class AddCompanies(Form): 
-	name = StringField('name', validators=None)
+	name = StringField('name')
 
 
 class Person(Form):
@@ -27,9 +27,11 @@ class AddCompany(Form):
 
 class AddTechTalks(Form):
 	name = StringField('name')
+	company = SelectField('type', choices=db_functions.get_companies())
 
 class AddWorkshop(Form):
-	name =  StringField('Workshop Name', validators=None)
+	name =  StringField('Workshop Name')
+	hosts = SelectField('type', choices=db_functions.get_users())
 
 class AddProjects(Form):
 	name =  StringField('Pillar Name', validators=None)
