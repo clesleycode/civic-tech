@@ -53,3 +53,13 @@ body {
 .navItem:nth-of-type(6) {
   border-bottom:2px solid #FFCA4C;
 }
+
+table.dataframe, .dataframe th, .dataframe td {
+  border: none;
+  border-bottom: 1px solid #C8C8C8;
+  border-collapse: collapse;
+  text-align:left;
+  padding: 10px;
+  margin-bottom: 40px;
+  font-size: 0.9em;
+}

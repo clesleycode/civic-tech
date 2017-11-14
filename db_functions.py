@@ -2,6 +2,7 @@ import pandas as pd
 from sqlalchemy import * 
 import uuid
 from flask import g
+import datetime as dt
 DATABASEURI = "postgresql://wke2102:8061@35.196.90.148/proj1part2"
 
 
@@ -82,7 +83,9 @@ def disp_companies():
 def disp_events():
 	results = get_events()
 	db = pd.DataFrame(results)
-	db.columns = ["Name:", "Time:", "Location:", "Number Attended:"]
+	db.columns = ["Name:", "When:", "Location:", "Number Attended:"]
+	f1 = lambda x: dt.datetime.strptime(str(x),'%Y-%m-%d %X').strftime("%b %d, %-I%p")
+	db["When:"] = db["When:"].apply(f1)
 	return db.to_html()
 	#return pd.DataFrame(db['Companies']).to_html()
 
