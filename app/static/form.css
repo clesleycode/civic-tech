@@ -113,3 +113,14 @@ input[type=checkbox] {
     vertical-align: middle;
     bottom: 1px;
 }
+
+table, thead, td {
+  border: none;
+  border-bottom: 10px solid #C8C8C8;
+  border-collapse: collapse;
+  text-align:left;
+  padding: 10px;
+  margin-bottom: 40px;
+  /*font-size: 0.9em; */
+  font-size: 30px;
+}

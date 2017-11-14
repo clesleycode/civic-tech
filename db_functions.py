@@ -70,46 +70,46 @@ def disp_companies():
 	results = get_companies()
 	db = pd.DataFrame(results)
 	db.columns = ["Index", "Companies"]
-	return pd.DataFrame(db['Companies']).to_html()
+	return pd.DataFrame(db['Companies']).to_html(index=False)
 
 
 def disp_companies():
 	results = get_companies()
 	db = pd.DataFrame(results)
-	db.columns = ["Index", "Companies:"]
-	return pd.DataFrame(db['Companies:']).to_html()
+	db.columns = ["Index", "Companies"]
+	return pd.DataFrame(db['Companies']).to_html(index=False)
 
 
 def disp_events():
 	results = get_events()
 	db = pd.DataFrame(results)
-	db.columns = ["Name:", "When:", "Location:", "Number Attended:"]
+	db.columns = ["Name", "When", "Location", "Number Attended"]
 	f1 = lambda x: dt.datetime.strptime(str(x),'%Y-%m-%d %X').strftime("%b %d, %-I%p")
-	db["When:"] = db["When:"].apply(f1)
-	return db.to_html()
+	db["When"] = db["When"].apply(f1)
+	return db.to_html(index=False)
 	#return pd.DataFrame(db['Companies']).to_html()
 
 
 def disp_projects():
 	results = get_projects()
 	db = pd.DataFrame(results)
-	db.columns = ["Number of People:", "Name:"]
-	return db.to_html()
+	db.columns = ["Number of People", "Name"]
+	return db.to_html(index=False)
 
 
 def disp_workshops():
 	results = get_workshops()
 	db = pd.DataFrame(results)
-	db.columns = ["Name:"]
-	return db.to_html()
+	db.columns = ["Name"]
+	return db.to_html(index=False)
 
 
 def disp_techtalks():
 	results = get_techtalks()
 	db = pd.DataFrame(results)
-	db.columns = ["Talk Name:", "Company Name:", "Other"]
+	db.columns = ["Talk Name", "Company Name", "Other"]
 	del db['Other']
-	return db.to_html()
+	return db.to_html(index=False)
 
 
 
