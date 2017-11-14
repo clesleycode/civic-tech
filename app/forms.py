@@ -4,9 +4,10 @@ from wtforms import validators"""
 import db_functions
 
 #from flask_wtf import Form
-from wtforms import  StringField, BooleanField, DateField, SelectField, TextField, IntegerField, SubmitField
+from wtforms import  StringField, BooleanField, DateField, SelectField, TextField, IntegerField, SubmitField, DateTimeField, validators
 from wtforms.validators import Required, InputRequired, Email
 from flask_wtf import FlaskForm as Form
+import datetime
 class LoginForm(Form):
 	remember_me = BooleanField('remember_me', default=False)
 
@@ -34,10 +35,15 @@ class AddWorkshop(Form):
 	hosts = SelectField('type', choices=db_functions.get_users())
 
 class AddProjects(Form):
-	name =  StringField('Pillar Name', validators=None)
+	name =  StringField('Pillar Name')
 
 class AddEvents(Form):
-	name = StringField('Pillar Name', validators=None)
-	location = StringField('Location', validators=None)
-	eventTime = DateField('Event Time', [InputRequired("Please enter event date")])
-	numberAttendees = StringField('Number of Attendees', validators=None)
+	name = StringField('Pillar Name')
+	location = StringField('Location')
+	#eventTime = DateField('Event Time')
+	eventTime = DateTimeField(
+        "Until", format="%Y-%m-%dT%H:%M:%S",
+        default=datetime.date.today(), ## Now it will call it everytime.
+        validators=[validators.DataRequired()])
+	numberAttendees = StringField('Number of Attendees')
+	pillar = SelectField('type', choices=db_functions.get_projects())

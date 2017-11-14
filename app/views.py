@@ -141,7 +141,6 @@ def techtalks():
 def addCompany():
 	if request.method == 'POST':
 		form = AddCompany(request.form)
-		print(form.data)
 		if form.validate_on_submit():
 			db_functions.insert_company(form.name.data)
 			flash('Company succesfully added.')
@@ -156,9 +155,10 @@ def addCompany():
 @app.route('/addevent', methods=['GET', 'POST']) 
 def addevents():
 	if request.method == 'POST':
-		print("in add events post method")
 		form = AddEvents(request.form)
-		if form.validate_on_submit():
+		print(form.data)
+		if(len(form.name.data) > 0 and len(form.location.data) > 0 and len(form.numberAttendees.data) > 0):
+			db_functions.insert_event(form.name.data, form.eventTime.data, form.location.data, form.numberAttendees.data, form.pillar.data)
 			flash('Event added succesfully')
 			return redirect(url_for('events'))
 		flash('Please fill out all fields')
@@ -172,8 +172,6 @@ def addevents():
 def addworkshop():
 	if request.method == 'POST':
 		form = AddWorkshop(request.form)
-		print(form.data)
-		print(form.hosts.data)
 		if (len(form.name.data) >1):
 			db_functions.insert_workshop(form.name.data, form.hosts.data)
 			flash("The workshop was succesfully added.")
