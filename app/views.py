@@ -21,6 +21,7 @@ oauth = OAuth(app)
 app.debug = True
 app.secret_key = 'kj1VHtx6sPDLUL1L'
 
+
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	if 'credentials' not in flask.session:
@@ -56,6 +57,7 @@ def oauth2callback():
 		stud = get_user_info(credentials)
 		return flask.redirect(flask.url_for('index'))
 
+
 @app.route('/login', methods=['GET', 'POST']) # create mappings
 def login():
 	'''
@@ -68,6 +70,7 @@ def login():
 	return(render_template('login.html',
 							title='Sign in!', 
 							form=form))
+
 
 def get_user_info(credentials):
 	# sends request to the UserInfo API to retrieve the user's information
@@ -92,7 +95,8 @@ def events():
 		return redirect(url_for('events'))
 		#return render_template('events.html',  form=form)
 	else:
-		return render_template('events.html',  form=form)
+		results = db_functions.disp_events()
+		return render_template('events.html', form=form, data=results)
 
 
 @app.route('/companies', methods=['GET', 'POST']) # create mappings
@@ -100,22 +104,28 @@ def company():
 	form = AddCompanies()
 	if form.validate_on_submit():
 		return(redirect('/companies'))
-	#db_functions.insert_company(form.name.data, form.address.data)
+	results = db_functions.disp_companies()
+	#db_functions.insert_company(form.name.data, form.address.data
 	return(render_template('companies.html',
 							title='Submit a company!', 
-							form=form))
+							form=form, data=results))
+
 
 @app.route('/projects', methods=['GET', 'POST']) 
 def projects():
 	form = AddProjects()
-	return render_template('projects.html',  form=form)
+	results = db_functions.disp_projects()
+	return render_template('projects.html',  form=form, data=results)
+
 
 @app.route('/workshops', methods=['GET', 'POST']) 
 def workshops():
 	if request.method == 'POST':
 		return render_template('workshop.html')
 	form = AddWorkshop()
-	return render_template('workshop.html',  form=form)
+	results = db_functions.disp_workshops()
+	return render_template('workshop.html', form=form, data=results)
+
 
 @app.route('/techtalks', methods=['GET', 'POST']) 
 def techtalks():
@@ -123,7 +133,9 @@ def techtalks():
 		return render_template('techtalks.html')
 	else:
 		form  = AddTechTalks()
-		return render_template('techtalks.html', form=form)
+		results = db_functions.disp_techtalks()
+		return render_template('techtalks.html', form=form, data=results)
+
 
 @app.route('/addcompany', methods=['GET', 'POST']) 
 def addCompany():
@@ -140,6 +152,7 @@ def addCompany():
 		form = AddCompany()
 		return render_template('addCompany.html', form=form)
 
+
 @app.route('/addevent', methods=['GET', 'POST']) 
 def addevents():
 	if request.method == 'POST':
@@ -153,6 +166,7 @@ def addevents():
 	else:
 		form = AddEvents()
 		return render_template('addEvents.html', form=form)
+
 
 @app.route('/addworkshop', methods=['GET', 'POST']) 
 def addworkshop():
@@ -171,6 +185,7 @@ def addworkshop():
 		form = AddWorkshop()
 		return render_template('addWorkshop.html', form=form)
 
+
 @app.route('/addtechtalk', methods=['GET', 'POST']) 
 def addtechtalk():
 	if request.method == 'POST':
@@ -186,6 +201,7 @@ def addtechtalk():
 		form = AddTechTalks()
 		flash("Please fill out all fields")
 		return render_template('addTechTalks.html', form=form)
+
 
 @app.route('/profile', methods=['GET', 'POST']) # create mappings
 def contact():
