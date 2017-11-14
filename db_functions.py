@@ -20,14 +20,12 @@ def insert_person(name, semester_start, pillarId, companyId):
 	cursor.execute(''' INSERT INTO Person (personId, personName, semester_start, pillarId, companyId) VALUES (%s, %s, %s, %s, %s) ''', (str(personId), str(name), str(semester_start), str(pillarId), str(companyId)))
 
 
-def insert_event(name, eventTime, location, numberAttendees):
-	#NEED to also trigger a call to get a logged in user's pillarId to then connect with IN_CHARGE_OF table
+def insert_event(name, eventTime, location, numberAttendees, pillarId):
 	eventId = str(uuid.uuid4().int)[:9]
 	cursor.execute(''' INSERT INTO Events (eventId, name, eventTime, location, numberAttendees) VALUES (%s, %s, %s, %s, %s) ''', (str(eventId), str(name), str(eventTime), str(location), str(numberAttendees)))
-
+	cursor.execute(''' INSERT INTO IN_CHARGE_OF (eventId, pillarId) VALUES (%s, %s) ''', (str(eventId), str(pillarId)))
 	
 def insert_workshop(workshopTopic,personId):
-	#need to also trigger call to get user's personId and then insert workshopId and personId into HOSTS table
 	workshop_id = str(uuid.uuid4().int)[:9]
 	cursor.execute(''' INSERT INTO Workshops (workshopId, workshopTopic) VALUES (%s, %s) ''', (workshop_id, str(workshopTopic)))
 	cursor.execute(''' INSERT INTO HOSTS (personId, workshopID) VALUES (%s, %s) ''', (str(personId), str(workshop_id)))
