@@ -129,11 +129,11 @@ def techtalks():
 def addCompany():
 	if request.method == 'POST':
 		form = AddCompany(request.form)
-		if form.validate_on_submit():
+		if form.validate_on_submit() and len(form.name.data) < 70 and len(form.name.data) > 1:
 			db_functions.insert_company(form.name.data)
 			flash('Company succesfully added.')
 			return redirect(url_for('company'))
-		flash('Please enter all valid fields')
+		flash('Please enter all valid fields (and/or be brief).')
 		return render_template('addCompany.html', form=form)
 	else:
 		form = AddCompany()
@@ -144,11 +144,11 @@ def addCompany():
 def addevents():
 	if request.method == 'POST':
 		form = AddEvents(request.form)
-		if(len(form.name.data) > 0 and len(form.location.data) < 20 and len(form.numberAttendees.data) > 0):
+		if(len(form.name.data) > 0 and len(form.location.data) < 20 and len(form.numberAttendees.data) > 0 and len(form.name.data) < 70 and len(form.location.data) > 1  ):
 			db_functions.insert_event(form.name.data, form.eventTime.data, form.location.data, form.numberAttendees.data, form.pillar.data)
 			flash('Event added succesfully')
 			return redirect(url_for('events'))
-		flash('Please fill out all fields and (be brief)')
+		flash('Please fill out all fields (and/or be brief).')
 		return render_template('addEvents.html', form=form)
 	else:
 		form = AddEvents()
@@ -171,12 +171,12 @@ def deleteevents():
 def addworkshop():
 	if request.method == 'POST':
 		form = AddWorkshop(request.form)
-		if (len(form.name.data) >1):
+		if (len(form.name.data) >1 and len(form.name.data) < 70):
 			db_functions.insert_workshop(form.name.data, form.hosts.data)
 			flash("The workshop was succesfully added.")
 			return redirect(url_for('workshops'))
 		else:
-			flash("Please fill out all fields")
+			flash("Please fill out all fields (and/or be brief).")
 			return render_template('addWorkshop.html', form=form)
 	else:
 		form = AddWorkshop()
@@ -187,12 +187,12 @@ def addworkshop():
 def addtechtalk():
 	if request.method == 'POST':
 		form = AddTechTalks(request.form)
-		if len(form.name.data) > 1:
+		if len(form.name.data) > 1 and len(form.name.data) < 70:
 			db_functions.insert_techtalk(form.name.data, form.company.data)
 			flash('Tech talk succesfully entered.')
 			return redirect(url_for('techtalks'))
 		else:
-			flash("Please fill out all fields.")
+			flash("Please fill out all fields (and/or be brief).")
 			return render_template('addTechTalks.html', form=form)
 	else:
 		form = AddTechTalks()
@@ -204,12 +204,12 @@ def addtechtalk():
 def updatetechtalk():
 	if request.method == 'POST':
 		form = UpdateTechTalk(request.form)
-		if len(form.name.data) > 1:
+		if len(form.name.data) > 1 and len(form.name.data) < 70:
 			db_functions.update_techtalks(form.name.data, form.talkId.data)
 			flash('Tech talk succesfully entered.')
 			return redirect(url_for('techtalks'))
 		else:
-			flash("Please fill out all fields.")
+			flash("Please fill out all fields (and/or be brief).")
 			return render_template('updateTechTalks.html', form=form)
 	else:
 		form = UpdateTechTalk()
@@ -221,9 +221,9 @@ def contact():
 	if request.method == 'POST':
 		form = Person(request.form)
 		print(form.data)
-		if len(form.name.data) < 70 and len(form.semester_start.data) < 20 and len(form.name.data) > 1:
+		if len(form.name.data) < 70 and len(form.semester_start.data) < 20 and len(form.name.data) > 1 and len(form.semester_start.data) > 1:
 			db_functions.insert_person(form.name.data, form.semester_start.data, form.project.data, form.company.data)
-			flash("Successfully made a new account. Now check out upcoming events.")
+			flash("Person succesfully added. Now check out upcoming events.")
 			return redirect(url_for('events'))
 		else:
 			flash("Please fill out all fields (and/or be brief).")
