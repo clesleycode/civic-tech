@@ -24,19 +24,7 @@ app.secret_key = 'kj1VHtx6sPDLUL1L'
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
-	if 'credentials' not in flask.session:
-		return flask.redirect(flask.url_for('oauth2callback'))
-	credentials = client.OAuth2Credentials.from_json(flask.session['credentials'])
-	if credentials.access_token_expired:
-		return flask.redirect(flask.url_for('oauth2callback'))
-	else:
-		#should add a check
-		#if query db for user info based on email, return home, else return make a profile page
-		if True:
-			return redirect(url_for('contact'))
-		else:
-			return redirect(url_for('contact'))
-
+	return redirect(url_for('contact'))
 
 @app.route('/oauth2callback')
 def oauth2callback():
