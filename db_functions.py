@@ -162,7 +162,6 @@ def disp_projects():
 
 def disp_workshops():
 	results = get_workshops()
-	print(results)
 	db = pd.DataFrame(results)
 	db.columns = ["Name", "Person"]
 	return db.to_html(index=False)
