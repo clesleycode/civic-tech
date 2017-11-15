@@ -235,6 +235,7 @@ def contact():
 
 
 # following code taken from server.py
+
 @app.before_request
 def before_request():
   """
@@ -250,6 +251,7 @@ def before_request():
     print("uh oh, problem connecting to database")
     import traceback; traceback.print_exc()
     g.conn = None
+
 
 @app.teardown_request
 def teardown_request(exception):

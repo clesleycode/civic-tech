@@ -11,7 +11,10 @@
   <form action="/deleteevent" method="post" name="event">
       {{ form.csrf_token }}
       <p> Which Event would you like to delete? </p>
+      <br>
       {{form.events_list()}}
+      <br>
+      <br>
       <button type="submit"> Submit </button>
   </form>
 </div>

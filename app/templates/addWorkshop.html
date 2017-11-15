@@ -11,8 +11,11 @@
   <form action="/addworkshop" method="post" name="Workshop">
       {{form.csrf_token}}
       {{form.name(placeholder="Workshop Name")}}
-      <p> Which person is in charge of the workshop? </p>
+      <p> Who is in charge of the workshop? </p>
+      <br>
       {{form.hosts()}}
+      <br>
+      <br>
       <button type="submit"> Submit </button>
   </form>
 </div>

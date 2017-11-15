@@ -1,13 +1,10 @@
-"""from flask_wtf import FlaskForm
-from wtforms import StringField, BooleanField, DateField, SelectField, TextField, IntegerField, SubmitField
-from wtforms import validators"""
 import db_functions
-
-#from flask_wtf import Form
 from wtforms import  StringField, BooleanField, DateField, SelectField, TextField, IntegerField, SubmitField, DateTimeField, validators
 from wtforms.validators import Required, InputRequired, Email
 from flask_wtf import FlaskForm as Form
 import datetime
+
+
 class LoginForm(Form):
 	remember_me = BooleanField('remember_me', default=False)
 
@@ -28,6 +25,7 @@ class Person(Form):
 		self.project.choices = db_functions.get_projects()
 		self.company.choices = db_functions.get_companies()
 
+
 class AddCompany(Form):
 	name = StringField('name')
 
@@ -39,12 +37,14 @@ class AddTechTalks(Form):
 		super(AddTechTalks, self).__init__(*args, **kwargs)
 		self.company.choices = db_functions.get_companies()
 
+
 class UpdateTechTalk(Form):
 	name = StringField('name')
 	talkId = SelectField('type')
 	def __init__(self, *args, **kwargs):
 		super(UpdateTechTalk, self).__init__(*args, **kwargs)
 		self.talkId.choices = db_functions.get_techtalks_names()
+
 
 class AddWorkshop(Form):
 	name =  StringField('Workshop Name')
@@ -53,8 +53,10 @@ class AddWorkshop(Form):
 		super(AddWorkshop, self).__init__(*args, **kwargs)
 		self.hosts.choices = db_functions.get_users()
 
+
 class AddProjects(Form):
 	name =  StringField('Pillar Name')
+
 
 class AddEvents(Form):
 	name = StringField('Pillar Name')
@@ -68,6 +70,7 @@ class AddEvents(Form):
 	def __init__(self, *args, **kwargs):
 		super(AddEvents, self).__init__(*args, **kwargs)
 		self.pillar.choices = db_functions.get_projects()
+
 
 class RemoveEvents(Form):
 	events_list = SelectField('type')
