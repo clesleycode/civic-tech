@@ -19,8 +19,14 @@ class AddCompanies(Form):
 class Person(Form):
 	name = StringField('name')
 	semester_start = StringField('semester-start')
-	project = SelectField('type', choices=db_functions.get_projects())
-	company = SelectField('type', choices=db_functions.get_companies())
+	#project = SelectField('type', choices=db_functions.get_projects())
+	#company = SelectField('type', choices=db_functions.get_companies())
+	project = SelectField('type')
+	company = SelectField('company')
+	def __init__(self, *args, **kwargs):
+		super(Person, self).__init__(*args, **kwargs)
+		self.project.choices = db_functions.get_projects()
+		self.company.choices = db_functions.get_companies()
 
 class AddCompany(Form):
 	name = StringField('name')
@@ -28,15 +34,24 @@ class AddCompany(Form):
 
 class AddTechTalks(Form):
 	name = StringField('name')
-	company = SelectField('type', choices=db_functions.get_companies())
+	company = SelectField('company')
+	def __init__(self, *args, **kwargs):
+		super(AddTechTalks, self).__init__(*args, **kwargs)
+		self.company.choices = db_functions.get_companies()
 
 class UpdateTechTalk(Form):
 	name = StringField('name')
-	talkId = SelectField('type', choices=db_functions.get_techtalks_names())
+	talkId = SelectField('type')
+	def __init__(self, *args, **kwargs):
+		super(UpdateTechTalk, self).__init__(*args, **kwargs)
+		self.talkId.choices = db_functions.get_techtalks_names()
 
 class AddWorkshop(Form):
 	name =  StringField('Workshop Name')
-	hosts = SelectField('type', choices=db_functions.get_users())
+	hosts = SelectField('type')
+	def __init__(self, *args, **kwargs):
+		super(AddWorkshop, self).__init__(*args, **kwargs)
+		self.hosts.choices = db_functions.get_users()
 
 class AddProjects(Form):
 	name =  StringField('Pillar Name')
@@ -49,8 +64,14 @@ class AddEvents(Form):
         default=datetime.date.today(), ## Now it will call it everytime.
         validators=[validators.DataRequired()])
 	numberAttendees = StringField('Number of Attendees')
-	pillar = SelectField('type', choices=db_functions.get_projects())
-
+	pillar = SelectField('type')
+	def __init__(self, *args, **kwargs):
+		super(AddEvents, self).__init__(*args, **kwargs)
+		self.pillar.choices = db_functions.get_projects()
 
 class RemoveEvents(Form):
-	events_list = SelectField('type', choices=db_functions.get_event_ids())
+	events_list = SelectField('type')
+	def __init__(self, *args, **kwargs):
+		super(RemoveEvents, self).__init__(*args, **kwargs)
+		self.events_list.choices = db_functions.get_event_ids()
+

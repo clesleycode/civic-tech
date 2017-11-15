@@ -144,11 +144,11 @@ def addCompany():
 def addevents():
 	if request.method == 'POST':
 		form = AddEvents(request.form)
-		if(len(form.name.data) > 0 and len(form.location.data) > 0 and len(form.numberAttendees.data) > 0):
+		if(len(form.name.data) > 0 and len(form.location.data) < 20 and len(form.numberAttendees.data) > 0):
 			db_functions.insert_event(form.name.data, form.eventTime.data, form.location.data, form.numberAttendees.data, form.pillar.data)
 			flash('Event added succesfully')
 			return redirect(url_for('events'))
-		flash('Please fill out all fields')
+		flash('Please fill out all fields and (be brief)')
 		return render_template('addEvents.html', form=form)
 	else:
 		form = AddEvents()
@@ -221,12 +221,12 @@ def contact():
 	if request.method == 'POST':
 		form = Person(request.form)
 		print(form.data)
-		if len(form.name.data) > 1 and len(form.semester_start.data) > 1:
+		if len(form.name.data) < 70 and len(form.semester_start.data) < 20 and len(form.name.data) > 1:
 			db_functions.insert_person(form.name.data, form.semester_start.data, form.project.data, form.company.data)
 			flash("Successfully made a new account. Now check out upcoming events.")
 			return redirect(url_for('events'))
 		else:
-			flash("Please fill out all fields.")
+			flash("Please fill out all fields (and/or be brief).")
 			form = Person()	
 			return render_template('join.html', title='Submit a contact!', form=form)	
 	else:
