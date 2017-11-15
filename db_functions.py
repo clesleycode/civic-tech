@@ -39,6 +39,8 @@ def insert_techtalk(talkName, companyId):
 def delete_event(eventId):
 	cursor.execute(''' DELETE FROM Events WHERE eventId = %s''', (str(eventId)))
 
+def get_event_ids():
+	return list(cursor.execute(''' SELECT eventId, name FROM Events ORDER BY name DESC; '''))
 
 def get_companies():
 	return list(cursor.execute(''' SELECT companyId, companyName FROM Company ORDER BY companyName ASC; '''))
@@ -55,10 +57,17 @@ def get_workshops():
 def get_techtalks():
 	return list(cursor.execute('''SELECT T.name, C.companyName, T.talkId FROM TechTalks T, Company C WHERE T.companyId = C.companyId ORDER BY T.talkId ASC; '''))
 
+def get_techtalks_names():
+	return list(cursor.execute('''SELECT talkId, name FROM TechTalks ORDER BY name DESC; '''))
+
+def update_techtalks(talkName, talkId):
+	cursor.execute(''' UPDATE TechTalks SET name = %s WHERE talkId = %s''', (str(talkName), str(talkId)))
+	#cursor.execute(''' UPDATE TechTalks SET name = %s WHERE talkdId = %s eventId = %s''', (str(talkName), str(talkId)))
+	#cursor.execute('''UPDATE TechTalks SET name = '%s' WHERE talkId = %s; '''), (str(talkName), talkId)
+
 
 def get_projects():
 	return list(cursor.execute('''SELECT pillarId, pillar from Projects ORDER BY pillar ASC;'''))
-
 
 def get_users():
 	return list(cursor.execute('''SELECT personId, personName from Person ORDER BY personName DESC;'''))

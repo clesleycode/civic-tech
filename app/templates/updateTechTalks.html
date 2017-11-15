@@ -1,0 +1,20 @@
+<!-- entend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+  <div class="info">
+    <h1>Add a new Tech Talk</h1>
+  </div>
+</div>
+<div class="form">
+  <form action="/updatetechtalk" method="post" name="companies">
+  	  {{ form.csrf_token }}
+      {{form.name(placeholder="Updated Tech Talk Name")}}
+      <p> Which tech talk are you updating the name for? </p>
+       {{form.talkId()}}
+      <button type="submit"> Submit </button>
+  </form>
+</div>
+
+{% endblock %}

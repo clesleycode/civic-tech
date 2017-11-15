@@ -30,6 +30,10 @@ class AddTechTalks(Form):
 	name = StringField('name')
 	company = SelectField('type', choices=db_functions.get_companies())
 
+class UpdateTechTalk(Form):
+	name = StringField('name')
+	talkId = SelectField('type', choices=db_functions.get_techtalks_names())
+
 class AddWorkshop(Form):
 	name =  StringField('Workshop Name')
 	hosts = SelectField('type', choices=db_functions.get_users())
@@ -40,10 +44,13 @@ class AddProjects(Form):
 class AddEvents(Form):
 	name = StringField('Pillar Name')
 	location = StringField('Location')
-	#eventTime = DateField('Event Time')
 	eventTime = DateTimeField(
         "Until", format="%Y-%m-%dT%H:%M:%S",
         default=datetime.date.today(), ## Now it will call it everytime.
         validators=[validators.DataRequired()])
 	numberAttendees = StringField('Number of Attendees')
 	pillar = SelectField('type', choices=db_functions.get_projects())
+
+
+class RemoveEvents(Form):
+	events_list = SelectField('type', choices=db_functions.get_event_ids())

@@ -1,0 +1,19 @@
+<!-- entend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+  <div class="info">
+    <h1>Add a new Event</h1>
+  </div>
+</div>
+<div class="form">
+  <form action="/deleteevent" method="post" name="event">
+      {{ form.csrf_token }}
+      <p> Which Event would you like to delete? </p>
+      {{form.events_list()}}
+      <button type="submit"> Submit </button>
+  </form>
+</div>
+
+{% endblock %}

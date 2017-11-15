@@ -11,7 +11,7 @@ from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 import db_functions
-from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents
+from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents, RemoveEvents,UpdateTechTalk
 import requests 
 import psycopg2
 
@@ -156,7 +156,6 @@ def addCompany():
 def addevents():
 	if request.method == 'POST':
 		form = AddEvents(request.form)
-		print(form.data)
 		if(len(form.name.data) > 0 and len(form.location.data) > 0 and len(form.numberAttendees.data) > 0):
 			db_functions.insert_event(form.name.data, form.eventTime.data, form.location.data, form.numberAttendees.data, form.pillar.data)
 			flash('Event added succesfully')
@@ -167,7 +166,19 @@ def addevents():
 		form = AddEvents()
 		return render_template('addEvents.html', form=form)
 
-
+@app.route('/deleteevent', methods=['GET', 'POST']) 
+def deleteevents():
+	if request.method == 'POST':
+		form = RemoveEvents(request.form)
+		if(len(form.events_list.data) > 0):
+			db_functions.delete_event(form.events_list.data)
+			flash('Event deleted succesfully.')
+			return redirect(url_for('events'))
+		flash('Please choose an event to delete.')
+		return render_template('deleteEvents.html', form=form)
+	else:
+		form = RemoveEvents()
+		return render_template('deleteEvents.html', form=form)
 @app.route('/addworkshop', methods=['GET', 'POST']) 
 def addworkshop():
 	if request.method == 'POST':
@@ -197,9 +208,25 @@ def addtechtalk():
 			return render_template('addTechTalks.html', form=form)
 	else:
 		form = AddTechTalks()
-		flash("Please fill out all fields")
+		#flash("Please fill out all fields")
 		return render_template('addTechTalks.html', form=form)
 
+
+@app.route('/updatetechtalk', methods=['GET', 'POST']) 
+def updatetechtalk():
+	if request.method == 'POST':
+		form = UpdateTechTalk(request.form)
+		if len(form.name.data) > 1:
+			db_functions.update_techtalks(form.name.data, form.talkId.data)
+			flash('Tech talk succesfully entered.')
+			return redirect(url_for('techtalks'))
+		else:
+			flash("Please fill out all fields.")
+			return render_template('updateTechTalks.html', form=form)
+	else:
+		form = UpdateTechTalk()
+		#flash("Please fill out all fields")
+		return render_template('updateTechTalks.html', form=form)
 
 @app.route('/profile', methods=['GET', 'POST']) # create mappings
 def contact():
