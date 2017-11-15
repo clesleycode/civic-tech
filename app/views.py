@@ -94,6 +94,7 @@ def company():
 		return(redirect('/companies'))
 	results = db_functions.disp_companies()
 	#db_functions.insert_company(form.name.data, form.address.data
+	print(db_functions.get_comps())
 	return(render_template('companies.html',
 							title='Submit a company!', 
 							form=form, data=results))

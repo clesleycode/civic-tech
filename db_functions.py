@@ -112,6 +112,9 @@ def get_projects():
 def get_users():
 	return list(cursor.execute('''SELECT personId, personName from Person ORDER BY personName DESC;'''))
 
+def get_comps():
+	return list(cursor.execute(''' SELECT Company.companyName, Person.personName FROM Company INNER JOIN Person on Person.companyId = Company.companyId GROUP BY Company.companyName, Person.personName; '''))
+
 
 '''
 This function updates an entry of the TechTalks table
@@ -137,10 +140,10 @@ def disp_companies():
 
 
 def disp_companies():
-	results = get_companies()
+	results = get_comps()
 	db = pd.DataFrame(results)
-	db.columns = ["Index", "Companies"]
-	return pd.DataFrame(db['Companies']).to_html(index=False)
+	db.columns = ["Company", "Student"]
+	return db.to_html(index=False)
 
 
 def disp_events():
@@ -173,7 +176,4 @@ def disp_techtalks():
 	db.columns = ["Talk Name", "Company Name", "Other"]
 	del db['Other']
 	return db.to_html(index=False)
-
-
-
 
