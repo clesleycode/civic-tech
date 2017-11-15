@@ -98,7 +98,7 @@ def get_events():
 	return list(cursor.execute(''' SELECT name, eventTime, location, numberAttendees FROM Events ORDER BY eventTime DESC; '''))
 
 def get_workshops():
-	return list(cursor.execute(''' SELECT workshopTopic FROM Workshops ORDER BY workshopTopic ASC; '''))
+	return list(cursor.execute(''' SELECT Workshops.workshopTopic, Person.personName FROM Workshops INNER JOIN HOSTS on Workshops.workshopId = HOSTS.workshopID INNER JOIN Person on HOSTS.personId = Person.personId; '''))
 
 def get_techtalks():
 	return list(cursor.execute('''SELECT T.name, C.companyName, T.talkId FROM TechTalks T, Company C WHERE T.companyId = C.companyId ORDER BY T.talkId ASC; '''))
@@ -162,8 +162,9 @@ def disp_projects():
 
 def disp_workshops():
 	results = get_workshops()
+	print(results)
 	db = pd.DataFrame(results)
-	db.columns = ["Name"]
+	db.columns = ["Name", "Person"]
 	return db.to_html(index=False)
 
 
