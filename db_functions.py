@@ -115,7 +115,6 @@ def get_users():
 def get_comps():
 	return list(cursor.execute(''' SELECT Company.companyName, Person.personName FROM Company INNER JOIN Person on Person.companyId = Company.companyId GROUP BY Company.companyName, Person.personName; '''))
 
-
 '''
 This function updates an entry of the TechTalks table
 	Input: 
