@@ -12,10 +12,8 @@ backports.shutil-get-terminal-size==1.0.0
 beautifulsoup4==4.6.0
 bitarray==0.8.1
 bkcharts==0.2
-blaze==0.11.3
 bleach==1.5.0
 blinker==1.4
-bokeh==0.12.10
 boto==2.48.0
 Bottleneck==1.2.1
 bs4==0.0.1
@@ -30,9 +28,6 @@ cloudpickle==0.4.0
 clyent==1.2.2
 colorama==0.3.9
 ConceptNet==5.5.4
-conda==4.4.7
-conda-build==3.0.27
-conda-verify==2.0.0
 ConfigArgParse==0.12.0
 contextlib2==0.5.5
 cryptography==2.0.3
@@ -50,7 +45,6 @@ discovery==0.0.4
 distributed==1.19.1
 docutils==0.14
 dyNET==2.0.1.post13
--e git+https://github.com/blei-lab/edward.git@4d8c1f3af0db805a0653a2e749acb25b8e58df42#egg=edward
 en-core-web-sm==2.0.0
 entrypoints==0.2.3
 enum34==1.1.6
