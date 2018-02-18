@@ -156,14 +156,11 @@ PyGithub==1.35
 Pygments==2.2.0
 PyJWT==1.5.3
 pylint==1.7.4
-pymatbridge==0.5.2
 pymessenger==0.0.7.0
 pyodbc==4.0.17
 pyOpenSSL==17.2.0
 pyowm==2.6.1
 pyparsing==2.2.0
-PyPDF2==1.26.0
-pyphonetics==0.4.1
 pyproj==1.9.5.1
 pyquery==1.4.0
 PySocks==1.6.7
