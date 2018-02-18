@@ -1,4 +1,4 @@
-import db_functions
+#import db_functions
 from wtforms import  StringField, BooleanField, DateField, SelectField, TextField, IntegerField, SubmitField, DateTimeField, validators
 from wtforms.validators import Required, InputRequired, Email
 from flask_wtf import FlaskForm as Form
@@ -12,7 +12,7 @@ class LoginForm(Form):
 class AddCompanies(Form): 
 	name = StringField('name')
 
-
+'''
 class Person(Form):
 	name = StringField('name')
 	semester_start = StringField('semester-start')
@@ -24,12 +24,12 @@ class Person(Form):
 		super(Person, self).__init__(*args, **kwargs)
 		self.project.choices = db_functions.get_projects()
 		self.company.choices = db_functions.get_companies()
-
+'''
 
 class AddCompany(Form):
 	name = StringField('name')
 
-
+'''
 class AddTechTalks(Form):
 	name = StringField('name')
 	company = SelectField('company')
@@ -52,12 +52,12 @@ class AddWorkshop(Form):
 	def __init__(self, *args, **kwargs):
 		super(AddWorkshop, self).__init__(*args, **kwargs)
 		self.hosts.choices = db_functions.get_users()
-
+'''
 
 class AddProjects(Form):
 	name =  StringField('Pillar Name')
 
-
+'''
 class AddEvents(Form):
 	name = StringField('Pillar Name')
 	location = StringField('Location')
@@ -77,4 +77,4 @@ class RemoveEvents(Form):
 	def __init__(self, *args, **kwargs):
 		super(RemoveEvents, self).__init__(*args, **kwargs)
 		self.events_list.choices = db_functions.get_event_ids()
-
+'''
