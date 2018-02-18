@@ -196,7 +196,6 @@ six==1.11.0
 sklearn==0.0
 slackclient==1.1.0
 smart-open==1.5.3
-snakemake==4.4.0
 snowballstemmer==1.2.1
 sortedcollections==0.5.3
 sortedcontainers==1.5.7
