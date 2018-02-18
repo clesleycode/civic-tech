@@ -11,7 +11,7 @@ from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 #import db_functions
-from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents, RemoveEvents,UpdateTechTalk
+#from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents, RemoveEvents,UpdateTechTalk
 import requests 
 import psycopg2
 
