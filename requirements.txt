@@ -35,9 +35,7 @@ cymem==1.31.2
 Cython==0.26.1
 cytoolz==0.8.2
 dask==0.15.3
-datashape==0.5.4
 decorator==4.1.2
-descartes==1.1.0
 dill==0.2.7.1
 discovery==0.0.4
 distributed==1.19.1
@@ -51,7 +49,6 @@ fastcache==1.0.2
 fbmq==2.4.3
 feedparser==5.2.1
 filelock==2.0.12
-Fiona==1.7.11
 Flask==0.12.2
 Flask-BasicAuth==0.2.0
 Flask-Cors==3.0.3
@@ -65,11 +62,6 @@ Flask-WTF==0.14.2
 foursquare==1!2016.9.12
 ftfy==4.4.3
 future==0.16.0
-gensim==3.1.0
-geocoder==1.22.4
-geojsonio==0.0.3
-geopandas==0.2.1
-geopy==1.11.0
 gevent==1.2.2
 github3.py==0.9.6
 glob2==0.5
