@@ -10,7 +10,7 @@ from oauth2client import client
 from flask_basicauth import BasicAuth
 from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
-import db_functions
+#import db_functions
 from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents, RemoveEvents,UpdateTechTalk
 import requests 
 import psycopg2
@@ -75,7 +75,7 @@ def get_user_info(credentials):
 	else:
 		raise NoUserIdException()
 
-
+'''
 @app.route('/events', methods=['GET', 'POST']) # create mappings
 def events():
 	form = AddEvents()
@@ -232,7 +232,7 @@ def contact():
 	else:
 		form = Person()	
 		return render_template('join.html', title='Submit a contact!', form=form)				
-
+'''
 
 # following code taken from server.py
 
