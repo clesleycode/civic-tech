@@ -151,7 +151,6 @@ pycosat==0.6.3
 pycparser==2.18
 pycrypto==2.6.1
 pycryptodome==3.4.11
-pycurl==7.43.0
 pyflakes==1.6.0
 PyGithub==1.35
 Pygments==2.2.0
