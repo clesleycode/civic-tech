@@ -12,19 +12,26 @@ from wtforms.validators import DataRequired
 from flask_oauthlib.client import OAuth
 #import db_functions
 #from .forms import AddCompanies, Person, AddCompany, AddTechTalks, AddWorkshop, AddProjects, AddEvents, RemoveEvents,UpdateTechTalk
-import requests 
+import requests
+from .forms import AddJob
 import psycopg2
+import pandas as pd
 
 basic_auth = BasicAuth(app)
 
 oauth = OAuth(app)
 app.debug = True
-app.secret_key = 'kj1VHtx6sPDLUL1L'
+app.secret_key = 'fNYgDhGPWd70AJL4VDHkstVF'
 
 
 @app.route('/', methods=['GET', 'POST'])
 def index():
 	return redirect(url_for('contact'))
+
+@app.route('/about')
+def about():
+	return(render_template('about.html',
+							title='About'))
 
 @app.route('/oauth2callback')
 def oauth2callback():
@@ -75,45 +82,44 @@ def get_user_info(credentials):
 	else:
 		raise NoUserIdException()
 
-'''
-@app.route('/events', methods=['GET', 'POST']) # create mappings
+
+@app.route('/orgs', methods=['GET', 'POST']) # create mappings
 def events():
-	form = AddEvents()
 	if request.method == 'POST':
 		return redirect(url_for('events'))
 		#return render_template('events.html',  form=form)
 	else:
-		results = db_functions.disp_events()
-		return render_template('events.html', form=form, data=results)
+		results = pd.read_csv('./app/orgs.csv')
+		return render_template('orgs.html', data=results.to_html())
 
 
-@app.route('/companies', methods=['GET', 'POST']) # create mappings
+@app.route('/jobs', methods=['GET', 'POST']) # create mappings
 def company():
-	form = AddCompanies()
+	form = AddJob()
 	if form.validate_on_submit():
-		return(redirect('/companies'))
-	results = db_functions.disp_companies()
+		return(redirect('/jobs'))
+	#results = db_functions.disp_companies()
+	results = pd.read_csv("./app/fellowships.csv")
 	#db_functions.insert_company(form.name.data, form.address.data
-	return(render_template('companies.html',
-							title='Submit a company!', 
-							form=form, data=results))
+	return(render_template('jobs.html',
+							title='Submit a job!', 
+							form=form, data=results.to_html()))
 
 
-@app.route('/projects', methods=['GET', 'POST']) 
+@app.route('/media', methods=['GET', 'POST']) 
 def projects():
-	form = AddProjects()
-	results = db_functions.disp_projects()
-	return render_template('projects.html',  form=form, data=results)
+	return render_template('media.html')
 
-
-@app.route('/workshops', methods=['GET', 'POST']) 
+'''
+@app.route('/articles', methods=['GET', 'POST']) 
 def workshops():
 	if request.method == 'POST':
-		return render_template('workshop.html')
+		return render_template('articles.html')
 	form = AddWorkshop()
 	results = db_functions.disp_workshops()
 	return render_template('workshop.html', form=form, data=results)
-
+'''
+'''
 
 @app.route('/techtalks', methods=['GET', 'POST']) 
 def techtalks():

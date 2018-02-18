@@ -37,7 +37,7 @@ class AddTechTalks(Form):
 		super(AddTechTalks, self).__init__(*args, **kwargs)
 		self.company.choices = db_functions.get_companies()
 
-
+'''
 class UpdateTechTalk(Form):
 	name = StringField('name')
 	talkId = SelectField('type')
@@ -46,13 +46,13 @@ class UpdateTechTalk(Form):
 		self.talkId.choices = db_functions.get_techtalks_names()
 
 
-class AddWorkshop(Form):
-	name =  StringField('Workshop Name')
-	hosts = SelectField('type')
+class AddJob(Form):
+	name =  StringField('Company')
+	hosts = SelectField('Position')
 	def __init__(self, *args, **kwargs):
-		super(AddWorkshop, self).__init__(*args, **kwargs)
-		self.hosts.choices = db_functions.get_users()
-'''
+		super(AddJob, self).__init__(*args, **kwargs)
+		self.hosts.choices = ["Software Engineer", "Data Scientist", "Product Manager"]
+
 
 class AddProjects(Form):
 	name =  StringField('Pillar Name')
