@@ -5,8 +5,7 @@ from flask import g
 import datetime as dt
 
 # project database URL
-DATABASEURI = "postgresql://wke2102:8061@35.196.90.148/proj1part2"
-
+DATABASEURI = "postgresql://civic-tech-for-beginners:us-central1:myinstance:35.202.43.58/civic-tech"
 
 # connect to db
 engine = create_engine(DATABASEURI)
