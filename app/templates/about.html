@@ -1,8 +1,16 @@
+<!-- entend from base layout -->
 {% extends "base.html" %}
+
 {% block content %}
-	<h1></h1>
-	{% for post in posts %}
-	<div><p>{{ post.author.nickname }} says: <b>{{ post.body }}</b></p>
-	</div>
-	{% endfor %}
+
+<div class="container">
+
+<div class="info">
+    <h1>About</h1>
+    This website is intended for people unfamiliar with civic tech, but wanting to begin working in the space, whether that be as a career, side volunteer work, or more.
+  </div>
+<br>
+{{data | safe}}
+</div>
+
 {% endblock %}
