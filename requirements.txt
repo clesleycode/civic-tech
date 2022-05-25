@@ -154,7 +154,7 @@ pycryptodome==3.4.11
 pyflakes==1.6.0
 PyGithub==1.35
 Pygments==2.2.0
-PyJWT==1.5.3
+PyJWT==2.4.0
 pylint==1.7.4
 pymessenger==0.0.7.0
 pyodbc==4.0.17
