@@ -117,7 +117,7 @@ nytimesarticle==0.1.0
 oauth2client==4.1.2
 oauthlib==2.0.6
 olefile==0.44
-openpyxl==2.4.0
+openpyxl==2.4.2
 ordered-set==2.0.2
 packaging==16.8
 pandas==0.20.1
